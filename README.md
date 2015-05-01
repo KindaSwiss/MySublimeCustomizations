@@ -1,17 +1,16 @@
 # My Sublime Customizations
 
 
-## Customizations include the following
-<br>
+## Customizations include the following:
 <dl>
 	<dt>Gulp integration</dt>
 	<dd>
-		I use a local server to communicate with gulp files so that I can get and display Sass compilation errors in the status bar. Multiple gulp files may connect at one time. 
+		I use a local server to communicate with gulp files so that I can display Sass compilation errors in Sublime's status bar. Multiple gulp files can connect at one time. 
 	</dd>
 
 	<dt>File size</dt>
 	<dd>
-		The size of a file is displayed in the status bar and updates on_modified (after 32 characters have been added or removed). The size is displayed in kilobytes "0.94 KB". 
+		The size of a file is displayed in the status bar and updates on_modified (after 32 characters have been added or removed). The size is displayed in kilobytes like such: "0.94 KB". 
 	</dd>
 
 	<dt>File save status</dt>
@@ -19,7 +18,7 @@
 		The status bar will display "Unsaved" if a file is unsaved. If the file is saved, the status bar shows nothing. 
 	</dd>
 </dl>
-
+<br>
  
 ## Commands
 <dl>
@@ -33,12 +32,13 @@
 	</dd>
 
 </dl>
+<br>
 
 
 ## Build Systems
 <dl>
  	<dt>NodeBuild</dt>
- 	<dd>I use it to run NodeJS files.</dd>
+ 	<dd>Used to run NodeJS files.</dd>
 </dl> 
 
 
