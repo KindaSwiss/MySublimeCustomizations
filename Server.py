@@ -10,6 +10,11 @@ from Customizations.Utils import ignore
 
 
 
+END_OF_MESSAGE = '\n'
+
+
+
+
 IS_FAILURE = 0
 IS_SUCCESS = 1
 
@@ -93,14 +98,23 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 				return self.finish()
 
 			while self.should_receieve:
-				data = self.request.recv(2048)
-				if not data:
+				data_bytes = self.request.recv(2048)
+				if not data_bytes:
 					break
-				data = json.loads(data.decode('UTF-8'))
+				
+				# print(data_bytes)
 
-				for callback in on_received_callbacks:
-					with ignore(Exception, origin="ThreadedTCPRequestHandler.handle"):
-						callback(data)
+				# NodeJS socket may queue messages and write them into a single message 
+				data_strings = [string for string in data_bytes.decode('UTF-8').split(END_OF_MESSAGE) if string]
+				commands = [json.loads(data_string) for data_string in data_strings if data_string]
+				
+				if len(commands) > 1:
+					print(data_strings,'\n', commands)
+
+				for command in commands:
+					for callback in on_received_callbacks:
+						with ignore(Exception, origin="ThreadedTCPRequestHandler.handle"):
+							callback(command)
 
 		self.finish()
 

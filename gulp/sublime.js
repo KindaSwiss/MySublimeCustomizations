@@ -7,11 +7,7 @@ var utils = require('./utils');
 var createSocket = require('./socket').createSocket;
 
 
-
-
 var PORT = 30048;
-
-
 
 
 var IS_FAILURE = 0
@@ -24,15 +20,11 @@ var ACTION_RESET = 8
 var ON_STATUS_BAR = 1
 
 
-
-
 /**
  * The maximum number of times the socket will try to reconnect to sublime 
  * @type {Number}
  */
 var MAX_TRIES = 10;
-
-
 
 
 /**
@@ -71,7 +63,6 @@ var socketEventHandlers = {
 		var data = json.loads(data.toString());
 	}
 }
-
 
 
 /**
@@ -182,9 +173,6 @@ var sublime = {
 	},
 
 };
-
-
-
 
 module.exports = sublime;
 

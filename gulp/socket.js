@@ -2,9 +2,10 @@
 
 var net = require('net');
 
+var END_OF_MESSAGE = '\n';
 
 function socket_send(data) {
-	this.write(JSON.stringify(data));
+	return this.write(JSON.stringify(data) + END_OF_MESSAGE);
 };
 
 
