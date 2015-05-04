@@ -143,7 +143,7 @@ var sublime = {
 	set_status: function(id, status) {
 		this._connection.send({
 			action: ACTION_UPDATE, 
-			perform_on: ON_STATUS_BAR, 
+			perform: ON_STATUS_BAR, 
 			status_id: id,
 			status: status });
 	},

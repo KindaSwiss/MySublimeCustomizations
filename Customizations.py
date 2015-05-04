@@ -17,6 +17,8 @@ user_settings = None
 
 # Set the file size in the status bar 
 def set_file_size(view):
+	# return print('setting file size')
+	# print('setting file size')
 	# Getting the number of bytes seems to be more accurate than sys.getsizeof
 	file_size = len(view.substr(Region(0, view.size())).encode('utf-8'))
 	view.set_status(
@@ -91,8 +93,6 @@ class SideBarListener(sublime_plugin.EventListener):
 
 
 
-
-
 IS_FAILURE = 0
 IS_SUCCESS = 1
 
@@ -109,16 +109,16 @@ def handle_received(data):
 
 	print(data)
 	
-	with ignore(Exception, message="handle_received"):
+	with ignore(Exception, origin="handle_received"):
 
 		action = data['action']
-		perform_on = data['perform_on']
+		perform = data.get('perform', 0)
 		view_ids = data.get('view_ids')
 		
 		active_view = sublime.active_window().active_view()
 
 		if action & ACTION_UPDATE:
-			if perform_on & ON_STATUS_BAR:
+			if perform & ON_STATUS_BAR:
 				[view.set_status(
 						data['status_id'], 
 						data.get('status', '')
@@ -133,7 +133,6 @@ def handle_received(data):
 						data['status_id'], 
 						''
 					) for view in all_views()]
-
 
 
 
