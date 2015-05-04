@@ -82,7 +82,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 		self.should_receieve = True
 		self.closed = False
 
-		with ignore(Exception, message="ThreadedTCPRequestHandler.handle"):
+		with ignore(Exception, origin="ThreadedTCPRequestHandler.handle"):
 			handshake = json.loads(self.request.recv(2048).decode('UTF-8'))
 
 			if handshake.get('id'):
@@ -99,7 +99,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 				data = json.loads(data.decode('UTF-8'))
 
 				for callback in on_received_callbacks:
-					with ignore(Exception, message="on_received_callbacks"):
+					with ignore(Exception, origin="ThreadedTCPRequestHandler.handle"):
 						callback(data)
 
 		self.finish()
@@ -119,7 +119,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 
 	def send(self, data):
 		# Send data to the client 
-		with ignore(Exception, message='ThreadedTCPRequestHandler.send'):
+		with ignore(Exception, origin='ThreadedTCPRequestHandler.send'):
 			data = sublime.encode_value(data)
 			self.request.sendall((data).encode(self.encoding))
 			return
