@@ -29,15 +29,14 @@
 	<dd>
 		Removes trailing whitespace in a selection of text. 
 	</dd>
-
 </dl>
 <br>
 
 
 ## Build Systems
 <dl>
- 	<dt>NodeBuild</dt>
- 	<dd>Used to run NodeJS files.</dd>
+ 	<dt>Node</dt>
+ 	<dd>Used to run NodeJS files with --harmony flag so fat arrow functions, proxies, etc. can be used.</dd>
 </dl> 
 
 
