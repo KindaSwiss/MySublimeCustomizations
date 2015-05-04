@@ -2,12 +2,12 @@ import sublime
 from contextlib import contextmanager
 
 @contextmanager
-def ignore(*exceptions, message="", print_exception=True):
+def ignore(*exceptions, origin="", message="", print_exception=True):
 	try:
 		yield exceptions
 	except exceptions as exs:
 		if print_exception:
-			print(exs, '- in ', message)
+			print(exs, '- in', origin, 'with message' if message else '', message)
 
 
 # Return whether all items passed are of a single type 
