@@ -28,7 +28,3 @@ def all_views():
 	return views
 
 
-
-
-
-

@@ -107,8 +107,6 @@ ON_STATUS_BAR = 1
 
 def handle_received(data):
 
-	print(data)
-	
 	with ignore(Exception, origin="handle_received"):
 
 		action = data['action']
