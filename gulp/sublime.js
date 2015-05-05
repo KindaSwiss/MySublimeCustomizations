@@ -13,12 +13,6 @@ var PORT = 30048;
 var IS_FAILURE = 0
 var IS_SUCCESS = 1
 
-var ACTION_UPDATE = 2
-var ACTION_REMOVE = 4
-var ACTION_RESET = 8
-
-var ON_STATUS_BAR = 2
-
 
 /**
  * The maximum number of times the socket will try to reconnect to sublime 
@@ -37,7 +31,6 @@ var tempDisconnectHandlers = [];
 var socketEventHandlers = {
 	close: function onSocketClosed() {
 		// console.log('Connection closed');
-		// console.log(tempDisconnectHandlers)
 		sublime.connected = connected = false;
 		
 		while (tempDisconnectHandlers.length) {
@@ -133,16 +126,28 @@ var sublime = {
 	 */
 	set_status: function(id, status) {
 		this._connection.send({
-			action: ACTION_UPDATE, 
-			target: ON_STATUS_BAR, 
+			command_name: "update_status_bar", 
 			data: { status_id: id,
 			 		status: status }
 		});
+	},
+	erase_status: function (id) {
+		this._connection.send({
+			command_name: 'erase_status_base',
+			data {
+				status_id: id
+			}
+		})
 	},
 	/**
 	 * Set a status message from an error 
 	 * @param  {String}
 	 */
+	hide_error: function (id) {
+		return function () {
+			sublime.erase_status(id);
+		};
+	},
 	show_error: function(id) {
 		var errorHandler = function show_error(err) {
 
@@ -153,11 +158,8 @@ var sublime = {
 			var file = err.file || err.fileName;
 
 			// Use the plugin name (provided by plumber) or the id, 
-			// if the plugin name does not exist
-			// var pluginName = utils.capitalize(err.plugin) || show_error.id;
+			// if the plugin name does not exist use the id 
 			var pluginName = err.plugin || show_error.id;
-			
-			// console.log(err.message.split(/\n/)[0] || ''); 
 			
 			'gulp-sass error, Line 25, File: _base.sass';
 

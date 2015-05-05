@@ -72,6 +72,7 @@ class StatusBarListener(sublime_plugin.EventListener):
 
 
 
+
 class SideBarListener(sublime_plugin.EventListener):
 
 	def on_window_command(self, window, command_name, args):
@@ -89,66 +90,6 @@ class SideBarListener(sublime_plugin.EventListener):
 
 
 
-
-IS_FAILURE = 0
-IS_SUCCESS = 1
-
-ACTION_UPDATE = 2
-ACTION_REMOVE = 4
-ACTION_RESET = 8
-
-ON_STATUS_BAR = 2
-
-
-
-
-def update_on_status_bar(data):
-	for view in all_views():
-		view.set_status(data['status_id'], data['status'])
-
-def remove_on_status_bar(data):
-	for view in all_views():
-		view.erase_status(data['status_id'])
-
-commands = {
-	ACTION_UPDATE: 
-	{
-		ON_STATUS_BAR: update_on_status_bar,
-	},
-	ACTION_REMOVE: 
-	{
-		ON_STATUS_BAR: remove_on_status_bar
-	}
-}
-
-
-
-
-def run_command(action, target, data):
-	# print('Action:', commands.get(action))
-	# print('Target:', commands.get(action, {}).get(target))
-
-	if not action in commands or not target in commands[action]:
-		raise Exception('Command not found for action {0} and'.format(action, target))
-
-	command = commands[action][target]
-	command(data)
-
-
-
-
-def handle_received(command):
-	with ignore(Exception, origin="handle_received"):
-
-		action = command['action']
-		target = command['target']
-		data = command['data']
-
-		run_command(action, target, data)
-
-
-
-
 def plugin_loaded():
 	global user_settings
 	user_settings = Settings()
@@ -159,9 +100,6 @@ def plugin_loaded():
 	set_file_size(view)
 	set_file_saved(view)
 	
-
-	from Customizations.Server import on_received
-	on_received(handle_received)
 
 
 
