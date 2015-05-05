@@ -22,7 +22,7 @@ ACTION_UPDATE = 2
 ACTION_REMOVE = 4
 ACTION_RESET = 8
 
-ON_STATUS_BAR = 1
+ON_STATUS_BAR = 2
 
 
 
@@ -38,11 +38,19 @@ on_received_callbacks = []
 
 
 
-
 # Add a callback when data is received 
 def on_received(callback):
+	""" Add a callback to the server's on_receive event """
 	global on_received_callbacks
 	on_received_callbacks.append(callback)
+
+
+
+
+def parse_commands(data_bytes):
+	data_strings = [string for string in data_bytes.decode('UTF-8').split(END_OF_MESSAGE) if string]
+	commands = [json.loads(data_string) for data_string in data_strings if data_string]
+	return commands
 
 
 
@@ -101,16 +109,16 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 				data_bytes = self.request.recv(2048)
 				if not data_bytes:
 					break
-				
+			
 				# print(data_bytes)
-
-				# NodeJS socket may queue messages and write them into a single message 
-				data_strings = [string for string in data_bytes.decode('UTF-8').split(END_OF_MESSAGE) if string]
-				commands = [json.loads(data_string) for data_string in data_strings if data_string]
 				
-				if len(commands) > 1:
-					print(data_strings,'\n', commands)
-
+				# Sockets may queue messages and send them as a single message 
+				# In order to get each JSON object separately, data_bytes must be 
+				# converted to a string and split by END_OF_MESSAGE. The parse_commands 
+				# function will do that and will also run json.loads on each string 
+				commands = parse_commands(data_bytes)
+				# print(commands)
+				
 				for command in commands:
 					for callback in on_received_callbacks:
 						with ignore(Exception, origin="ThreadedTCPRequestHandler.handle"):

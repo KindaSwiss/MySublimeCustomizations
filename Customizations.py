@@ -90,9 +90,6 @@ class SideBarListener(sublime_plugin.EventListener):
 
 
 
-
-
-
 IS_FAILURE = 0
 IS_SUCCESS = 1
 
@@ -100,37 +97,54 @@ ACTION_UPDATE = 2
 ACTION_REMOVE = 4
 ACTION_RESET = 8
 
-ON_STATUS_BAR = 1
+ON_STATUS_BAR = 2
 
 
 
 
-def handle_received(data):
+def update_on_status_bar(data):
+	for view in all_views():
+		view.set_status(data['status_id'], data['status'])
 
+def remove_on_status_bar(data):
+	for view in all_views():
+		view.erase_status(data['status_id'])
+
+commands = {
+	ACTION_UPDATE: 
+	{
+		ON_STATUS_BAR: update_on_status_bar,
+	},
+	ACTION_REMOVE: 
+	{
+		ON_STATUS_BAR: remove_on_status_bar
+	}
+}
+
+
+
+
+def run_command(action, target, data):
+	# print('Action:', commands.get(action))
+	# print('Target:', commands.get(action, {}).get(target))
+
+	if not action in commands or not target in commands[action]:
+		raise Exception('Command not found for action {0} and'.format(action, target))
+
+	command = commands[action][target]
+	command(data)
+
+
+
+
+def handle_received(command):
 	with ignore(Exception, origin="handle_received"):
 
-		action = data['action']
-		perform = data.get('perform', 0)
-		view_ids = data.get('view_ids')
-		
-		active_view = sublime.active_window().active_view()
+		action = command['action']
+		target = command['target']
+		data = command['data']
 
-		if action & ACTION_UPDATE:
-			if perform & ON_STATUS_BAR:
-				[view.set_status(
-						data['status_id'], 
-						data.get('status', '')
-					) for view in all_views()]
-
-		elif action & ACTION_REMOVE:
-			pass
-
-		elif action & ACTION_RESET:
-			if perform_on & ON_STATUS_BAR:
-				[view.set_status(
-						data['status_id'], 
-						''
-					) for view in all_views()]
+		run_command(action, target, data)
 
 
 

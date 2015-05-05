@@ -17,7 +17,7 @@ var ACTION_UPDATE = 2
 var ACTION_REMOVE = 4
 var ACTION_RESET = 8
 
-var ON_STATUS_BAR = 1
+var ON_STATUS_BAR = 2
 
 
 /**
@@ -134,9 +134,10 @@ var sublime = {
 	set_status: function(id, status) {
 		this._connection.send({
 			action: ACTION_UPDATE, 
-			perform: ON_STATUS_BAR, 
-			status_id: id,
-			status: status });
+			target: ON_STATUS_BAR, 
+			data: { status_id: id,
+			 		status: status }
+		});
 	},
 	/**
 	 * Set a status message from an error 
