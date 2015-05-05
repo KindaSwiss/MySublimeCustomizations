@@ -1,6 +1,7 @@
 import sublime
 from contextlib import contextmanager
 
+
 @contextmanager
 def ignore(*exceptions, origin="", message="", print_exception=True):
 	try:
@@ -26,5 +27,7 @@ def all_views():
 		for view in window.views():
 			views.append(view)
 	return views
+
+
 
 
