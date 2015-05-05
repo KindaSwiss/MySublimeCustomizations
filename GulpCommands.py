@@ -8,18 +8,18 @@ IS_SUCCESS = 1
 
 
 
-def UpdateStatusBarCommand(data):
+def UpdateStatusCommand(data):
 	for view in all_views():
 		view.set_status(data['status_id'], data['status'])
 
-def EraseStatusBarCommand(data):
+def EraseStatusCommand(data):
 	for view in all_views():
 		view.erase_status(data['status_id'])
 
 
 commands = {
-	"update_status_bar": UpdateStatusBarCommand,
-	"erase_status_bar": EraseStatusBarCommand,
+	"update_status": UpdateStatusBarCommand,
+	"erase_status": EraseStatusBarCommand,
 }
 
 

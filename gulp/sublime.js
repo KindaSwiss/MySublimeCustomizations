@@ -126,15 +126,15 @@ var sublime = {
 	 */
 	set_status: function(id, status) {
 		this._connection.send({
-			command_name: "update_status_bar", 
+			command_name: 'update_status', 
 			data: { status_id: id,
 			 		status: status }
 		});
 	},
 	erase_status: function (id) {
 		this._connection.send({
-			command_name: 'erase_status_base',
-			data {
+			command_name: 'erase_status',
+			data: {
 				status_id: id
 			}
 		})
