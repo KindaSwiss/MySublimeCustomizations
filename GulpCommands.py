@@ -18,8 +18,8 @@ def EraseStatusCommand(data):
 
 
 commands = {
-	"update_status": UpdateStatusBarCommand,
-	"erase_status": EraseStatusBarCommand,
+	"update_status": UpdateStatusCommand,
+	"erase_status": EraseStatusCommand,
 }
 
 
