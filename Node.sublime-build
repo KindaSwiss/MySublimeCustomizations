@@ -1,7 +1,7 @@
 {
 
 	"cmd": ["node", "--harmony", "--use_strict", "--harmony_strings", "$file"],
-	// "selector": "source.js",
+	"selector": "source.js",
 	"line_regex": "Line ([0-9]+):",
 	"osx":
 	{
