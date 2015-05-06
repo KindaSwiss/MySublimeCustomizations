@@ -1,4 +1,7 @@
-extras.txt
+
 /node_modules
-package.json
 /buildscripts
+
+extras.txt
+Test.py
+package.json
