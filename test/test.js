@@ -9,8 +9,8 @@ var util = require('util');
 var path = require('path');
 
 
-var utils = require('./../gulp/utils');
-var sockets = require('./../gulp/socket');
+var utils = require('./../gulp/sublime/utils');
+var sockets = require('./../gulp/sublime/socket');
 
 var PORT = 30048;
 

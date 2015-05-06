@@ -110,7 +110,7 @@ class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
 				if not data_bytes:
 					break
 			
-				# print(data_bytes)
+				print(data_bytes)
 				
 				# Sockets may queue messages and send them as a single message 
 				# In order to get each JSON object separately, data_bytes must be 
