@@ -8,13 +8,13 @@ IS_SUCCESS = 1
 
 
 
-def UpdateStatusCommand(data):
+def UpdateStatusCommand(status_id, status):
 	for view in all_views():
-		view.set_status(data['status_id'], data['status'])
+		view.set_status(status_id, status)
 
-def EraseStatusCommand(data):
+def EraseStatusCommand(status_id):
 	for view in all_views():
-		view.erase_status(data['status_id'])
+		view.erase_status(status_id)
 
 
 commands = {
@@ -26,20 +26,18 @@ commands = {
 
 
 def run_command(command_name, data):
-	# print('Action:', commands.get(action))
-	# print('Target:', commands.get(action, {}).get(target))
-
 	if not command_name in commands:
 		raise Exception('Command not found for command name {0}'.format(command_name))
 
 	command = commands[command_name]
-	command(data)
+	command(**data)
 
 
 
 
 def handle_received(command):
 	with ignore(Exception, origin="handle_received"):
+		# print(command)
 		command_name = command['command_name']
 		data = command['data']
 
