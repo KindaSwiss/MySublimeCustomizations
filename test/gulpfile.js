@@ -1,10 +1,10 @@
 'use strict';
 
 /**
- * The error produced by compile-sass--plumber and compile-sass 
- * should produce the same error message in Sublime Text. When 
- * there is no error, both should erase the status message from 
- * Sublime Text 
+ * If an error is produced when compiling the Sass files, 
+ * a status message should show in Sublime's status bar with 
+ * the error details. When there is no error produced, the 
+ * status message should be erased. 
  */
 
 var gulp = require('gulp');
@@ -106,6 +106,7 @@ gulp.task('watch', function () {
 			'compile-sass--handle-direct',
 		]
 	);
+
 	sublime.connect();
 });
 
