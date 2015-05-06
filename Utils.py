@@ -54,5 +54,8 @@ def get_command_name(clsname):
 
 
 
+def get_views_by_id(ids):
+	return [view for view in all_views() if view.id() in (ids if isinstance(ids, list) else [ids])]
+
 
 
