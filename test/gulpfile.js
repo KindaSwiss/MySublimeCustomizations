@@ -46,7 +46,9 @@ gulp.task('compile-sass--plumber', function (done) {
 			indentedSyntax: true,
 			// onSuccess runs for each file that is successfully compiled. 
 			// It does not run when all files have been successfully compiled 
-			onSuccess: function () {}
+			onSuccess: function (file) {
+				// console.log(file)
+			}
 		})).
 	
 		pipe(gulp.dest(paths.sassDest));
@@ -97,21 +99,19 @@ gulp.task('compile-sass--handle-direct', function (done) {
 
 
 gulp.task('watch', function () {
-	gulp.watch([
+
+	var watcher = gulp.watch([
 			paths.sass,
 		],
 		[
-			'compile-sass--plumber',
-			'compile-sass--handle-indirect',
+			// 'compile-sass--plumber',
+			// 'compile-sass--handle-indirect',
 			'compile-sass--handle-direct',
 		]
 	);
 
 	sublime.connect();
 });
-
-
-
 
 
 

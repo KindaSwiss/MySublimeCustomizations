@@ -13,22 +13,21 @@ var createSocket = require('./socket').createSocket;
  */
 var PORT = 30048;
 
-
-var IS_FAILURE = 0
-var IS_SUCCESS = 1
-
-
 /**
  * The maximum number of times the socket will try to reconnect to sublime 
  * @type {Number}
  */
 var MAX_TRIES = 10;
+var RECONNECT_TIMEOUT = 1000;
 
+
+var IS_FAILURE = 0;
+var IS_SUCCESS = 1;
 
 
 /**
- * This array holds handlers added by sublime.disconnect 
- * each callback is removed right after it is called 
+ * This array holds handlers added by sublime.disconnect. 
+ * Each callback is removed right after it is called 
  * @type {Array}
  */
 var tempDisconnectHandlers = [];
@@ -102,7 +101,7 @@ var sublime = {
 				port: PORT,
 				on: socketEventHandlers
 			}, onConnectHandler);
-		}.bind(this), 5000);
+		}.bind(this), RECONNECT_TIMEOUT);
 	},
 	/**
 	 * Connect the server to sublime 
@@ -167,6 +166,20 @@ var sublime = {
 			}
 		})
 	},
+	/*
+	run_command: function (command_name, args) {
+		sublime._connection.send({
+			command: command_name,
+			args: args
+		});
+	},
+	*/
+	run: function (command_name, args) {
+		sublime._connection.send({
+			command_name: command_name,
+			data: args
+		});
+	},
 	/**
 	 * Hide the status message from an error. 
 	 *
@@ -221,12 +234,26 @@ var sublime = {
 			// if the plugin name does not exist use the id 
 			var pluginName = err.plugin || show_error.id;
 			
-			'gulp-sass error, Line 25, File: _base.sass';
+			'gulp-sass error, Line 9, File: _error.sass';
 
 			var status = util.format('%s error, Line %s, File: %s', 
 				pluginName, line, path.basename(file))
 
+			// Set a status message 
 			sublime.set_status(id, status);
+
+			sublime.run('show_popup', {
+				file_name: file, 
+				line: line,
+				message: util.format('Line %d; \n%s', line, err.message.split(/\n/)[0]) });
+
+			// sublime.run('highlight_text_line', {
+			// 	id: id,
+			// 	file_name: file, 
+			// 	line: line, });
+			
+			// sublime.run('gutter_line', { 
+			// 	id: id, file_name: file, line: line });
 
 			return status;
 		}
@@ -239,7 +266,6 @@ var sublime = {
 		
 		return errorHandler;
 	},
-
 };
 
 module.exports = sublime;

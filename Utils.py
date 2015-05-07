@@ -54,8 +54,29 @@ def get_command_name(clsname):
 
 
 
-def get_views_by_id(ids):
+def get_views_by_ids(ids):
 	return [view for view in all_views() if view.id() in (ids if isinstance(ids, list) else [ids])]
 
 
 
+
+def get_views_by_file_names(file_names):
+	""" Get views by a file name """ 
+	if not isinstance(file_names, list):
+		file_names = [file_names]
+
+	views = []
+	
+	for window in sublime.windows():
+		for file_name in file_names:
+			view = window.find_open_file(file_name)
+			if view:
+				views.append(view)
+
+	return views
+
+
+
+
+def get_source_scope(view):
+	return view.scope_name(0).split(' ')[0]
