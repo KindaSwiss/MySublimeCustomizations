@@ -1,7 +1,8 @@
 
 /node_modules
 /buildscripts
-
+/gulp
+/test
 extras.txt
 Test.py
 package.json
