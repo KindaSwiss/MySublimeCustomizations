@@ -1,6 +1,6 @@
 {
 
-	"cmd": ["babel-node", "$file"],
+	"cmd": ["mocha", "--harmony", "$file"],
 	"selector": "source.js",
 	"line_regex": "Line ([0-9]+):",
 	"osx":
@@ -12,4 +12,5 @@
 	{
 		"shell": "true"
 	}
+
 }

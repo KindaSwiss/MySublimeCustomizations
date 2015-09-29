@@ -1,13 +1,3 @@
 [
-	{ "caption": "Remove Selections", "command": "remove_white_space_selection_lines" },
-	{ "caption": "Trim Lines", "command": "trim_trailing_white_space_in_selection" },
-	{ "caption": "Sass Convert", "command": "sass_convert" },
-	{ "caption": "Server", 
-		"children": [
-			{ "caption": "Start Server", "command": "start_server" },
-			{ "caption": "Stop Server", "command": "stop_server" }
-
-		]
-	}
+	{ "caption": "Remove Selections", "command": "remove_white_space_selection_lines" }
 ]
-

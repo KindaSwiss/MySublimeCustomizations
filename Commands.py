@@ -39,65 +39,13 @@ class RemoveWhiteSpaceSelectionLinesCommand(sublime_plugin.TextCommand):
 
 
 
-# Used to trim off trailing whitespace in a selection 
-class TrimTrailingWhiteSpaceInSelectionCommand(sublime_plugin.TextCommand):
-	""" Trim whitespace off the end of each line in a selection """
-	def run(self, edit):
-		view = self.view
-		view_settings = view.settings()
-		sels = [sel for sel in view.sel() if not sel.empty()]
+# A keybinding to side_bar_rename
+class CRename(sublime_plugin.ApplicationCommand):
+	def run(self):
+		window = sublime.active_window()
+		view = window.active_view()
+		file_name = view.file_name()
 
-		# Get all whitespace regions
-		trailing_white_space_regions = self.view.find_all("[\t ]+$")
-
-		# The regions to trim
-		to_trim = []
-
-		# Check if any of the trailing whitespace is in any selection region
-		for sel in sels:
-			for region in trailing_white_space_regions:
-				# Get the regions intersecting the selector region
-				if sel.intersects(region):
-					to_trim.append(region)
-					
-		# Erase the regions starting from the last!!1
-		to_trim.reverse()
-
-		# This command will trim lines that are just whitespace. 
-		# By setting trim_empty_lines to false, lines that are just whitespace will not be trimmed
-		trim_empty_lines = user_settings.get('trim_empty_lines') or view_settings.get('trim_empty_lines')
-		
-		for region in to_trim:
-
-			if not trim_empty_lines:
-				line = view.substr(view.line(region.begin())).strip()
-				if not line:
-					continue
-			view.erase(edit, region)
-
-
-
-
-# Naive Sass Convert command to convert SCSS to Sass
-class SassConvertCommand(sublime_plugin.TextCommand):
-	""" Get rid of all semicolons and opening and closing curly brackets """
-	def run(self, edit):
-		view = self.view
-		view_settings = view.settings()
-		sels = [sel for sel in view.sel() if not sel.empty()]
-
-		# Get all whitespace regions
-		regions_to_erase = view.find_all("\{|\}|\;")
-
-		# Erase the regions starting from the last!!1
-		regions_to_erase.reverse()
-		
-		for region in regions_to_erase:
-			view.erase(edit, region)
-		
-		view.run_command("trim_trailing_white_space")
-
-
-
-
-
+		if file_name and os.path.exists(file_name):
+			args = { 'paths': [file_name] }
+			window.run_command('side_bar_rename', args)
