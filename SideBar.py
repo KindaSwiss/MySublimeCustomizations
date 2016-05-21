@@ -1,7 +1,5 @@
 import sublime_plugin
-
-
-
+from Customizations.Utils import all_views
 
 class SideBarListener(sublime_plugin.EventListener):
 

@@ -5,14 +5,8 @@ from collections import defaultdict
 
 from Customizations.Settings import Settings
 
-
-
-
 # User settings from User/Customizations.sublime-settings
 user_settings = None
-
-
-
 
 # Set the file size in the status bar
 def set_file_size(view):
@@ -29,9 +23,6 @@ def set_file_saved(view):
 			'file_saved',
 			'Unsaved' if view.is_dirty() else ''
 		)
-
-
-
 
 view_sizes = defaultdict(int)
 
@@ -66,10 +57,6 @@ class StatusBarListener(sublime_plugin.EventListener):
 		basename = os.path.basename(view.file_name())
 		if basename == 'Vagrantfile':
 			view.set_syntax_file('Packages/Ruby/Ruby.tmLanguage')
-
-
-
-
 
 def plugin_loaded():
 	global user_settings
