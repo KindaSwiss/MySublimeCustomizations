@@ -1,6 +1,6 @@
 {
 
-	"cmd": ["mocha", "--harmony", "$file"],
+	"cmd": ["mocha", "--compilers", "js:babel/register", "$file"],
 	"selector": "source.js",
 	"line_regex": "Line ([0-9]+):",
 	"osx":
@@ -12,5 +12,4 @@
 	{
 		"shell": "true"
 	}
-
 }

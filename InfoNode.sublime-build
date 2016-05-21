@@ -1,6 +1,7 @@
 {
 	"cmd": [
 		"node",
+		"--trace-opt",
 		"--harmony_destructuring",
 		"--harmony_default_parameters",
 		"--harmony_rest_parameters",

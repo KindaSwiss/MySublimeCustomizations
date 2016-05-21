@@ -4,8 +4,9 @@
 		"--harmony_destructuring",
 		"--harmony_default_parameters",
 		"--harmony_rest_parameters",
-		"--allow-natives-syntax",
-		"$file"
+		"$file",
+		"|",
+		"tap-spec"
 	],
 	"selector": "source.js",
 	"line_regex": "Line ([0-9]+):",
@@ -13,6 +14,7 @@
 	{
 		"path": "/usr/local/bin:$PATH"
 	},
+
 	"windows":
 	{
 		"shell": "true"
