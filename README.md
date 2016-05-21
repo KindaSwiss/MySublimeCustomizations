@@ -2,7 +2,7 @@
 
 #### File size
 
-The size of a file is displayed in the status bar and is updated on_modified. The size is displayed in kilobytes like such: "0.94 KB". 
+The size of a file is displayed in the status bar and is updated on_modified_async every time there is a change in 32 characters. The size is displayed in kilobytes e.g. `0.94 KB`. 
 
 #### File save status
 
@@ -10,21 +10,30 @@ The status bar will display "Unsaved" if a file is unsaved. If the file is saved
 
 #### Gulp integration
 
-Something that is not included here, is the server I use to receive error messages from Gulp files. It can be found [here](https://github.com/anthonykoch/sublimegulpserver). 
+I also run a local server which can receive and display error messages from Gulp Tasks, which may be [found here](https://github.com/anthonykoch/editorconnect-sublime). 
 
 
 ## Commands
 
 #### RemoveWhiteSpaceSelectionLinesCommand
-Removes selection lines that are just whitespace. It is meant to be used after split_selection_into_lines so that only lines that have text (not just whitespace) are selected.
+
+Removes selection lines that are just whitespace. Each line must be separately selected (e.g. after running split_selection_into_lines) in order for it to work properly. 
 
 
 ## Build Systems
- 
+
 #### Node
 
-Uses babel-node to compile and run ES6 javascript. 
+Runs a JavaScript file with ES6 syntax enabled. 
+
+#### InfoNode
+
+Runs a JavaScript file with ES6 syntax enabled. This build option also set's the trace-opt flag so that V8 will output optimization information. 
+
+#### Tape
+
+Runs a JavaScript file and pipes its output to tap-spec. This assumes the file tap-spec is available to the file being run. 
 
 #### Mocha
 
-Used to run tests. 
+Used to run mocha tests (indivdual files) with ES6 syntax enabled. Babel must be globally installed from npm first.  
