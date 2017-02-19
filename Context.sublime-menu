@@ -1,3 +1,3 @@
 [
-	{ "caption": "Remove Selections", "command": "remove_white_space_selection_lines" }
+	{ "caption": "Split Selection", "command": "split_selection_remove_empty_lines" }
 ]

@@ -1,21 +1,29 @@
-import sublime_plugin, sublime, sys, os
+import sublime_plugin
+import sublime
+import sys
+import os
 from sublime import Region
 from functools import partial
 from Customizations.Settings import Settings
 
+
 # User settings from User/Customizations.sublime-settings
 user_settings = None
+
 
 def plugin_loaded():
 	global user_settings
 	user_settings = Settings()
 	user_settings.load()
 
-# For use after split_selection_into_lines to remove selection lines that are just whitespace
-class RemoveWhiteSpaceSelectionLinesCommand(sublime_plugin.TextCommand):
-	""" Remove selection lines that are only whitespace """
+
+class SplitSelectionRemoveEmptyLines(sublime_plugin.TextCommand):
+	"""
+	Splits lines into selections and subsequent empty line selections
+	"""
 	def run(self, edit, **kwargs):
 		view = self.view
+		view.run_command('split_selection_into_lines')
 		sels = view.sel()
 		new_sels = []
 
@@ -27,8 +35,10 @@ class RemoveWhiteSpaceSelectionLinesCommand(sublime_plugin.TextCommand):
 		sels.clear()
 		sels.add_all(new_sels)
 
-# A keybinding to side_bar_rename
+
 class CRename(sublime_plugin.ApplicationCommand):
+	""" A keybinding to side_bar_rename """
+
 	def run(self):
 		window = sublime.active_window()
 		view = window.active_view()
