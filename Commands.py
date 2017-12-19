@@ -47,3 +47,16 @@ class CRename(sublime_plugin.ApplicationCommand):
 		if file_name and os.path.exists(file_name):
 			args = { 'paths': [file_name] }
 			window.run_command('side_bar_rename', args)
+
+class CDuplicate(sublime_plugin.ApplicationCommand):
+	""" A keybinding to side_bar_rename """
+
+	def run(self):
+		window = sublime.active_window()
+		view = window.active_view()
+		file_name = view.file_name()
+
+		if file_name and os.path.exists(file_name):
+			args = { 'paths': [file_name] }
+			window.run_command('side_bar_duplicate', args)
+
